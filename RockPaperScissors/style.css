@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *{
     background-color: bisque;
 }
@@ -13,4 +14,21 @@ button {
   
   button:hover {
     background-color: #ccc;
+=======
+*{
+    background-color: bisque;
+}
+button {
+    padding: 12px 20px;
+    margin: 8px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background-color: #eee;
+  }
+  
+  button:hover {
+    background-color: #ccc;
+>>>>>>> 44c689b76ff6e62030db33956daa9ecd6be70315
   }
