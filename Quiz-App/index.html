@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz-App</title>
+    <style>
+        #quiz-card {
+            width: 400px;
+            height: 300px;
+            background-color: lemonchiffon;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;"> Javascript Quiz </h1>
+    <div id="quiz-card">
+    <p id="question"></p><br><br>
+    <div id="options"></div><br><br>
+    <button id = "next"> Start Quiz ! </button>
+    <p id="score"></p>
+    <button id="restart" style="display:none;">Restart Quiz</button>
+    </div>
+</body>
+<script>
+    const question = [
+        {
+            question : "What is JavaScript?",
+            options : [
+                "A programming language",
+                "A markup language",
+                "A styling language",
+                "None of the above"
+            ],
+            answer : "A programming language"
+        },
+        {
+            question : "Which company developed JavaScript?",
+            options : [
+                "Microsoft",
+                "Netscape",
+                "Google",
+                "Apple"
+            ],
+            answer : "Netscape"
+        },
+        {
+            question : "What is the correct syntax for referring to an external script called 'script.js'?",
+            options : [
+                "<script src='script.js'>",
+                "<script href='script.js'>",
+                "<script name='script.js'>",
+                "<script file='script.js'>"
+            ],
+            answer : "<script src='script.js'>"
+        },
+        {
+            question : "Which of the following is a JavaScript framework?",
+            options : [
+                "React",
+                "Django",
+                "Laravel",
+                "Ruby on Rails"
+            ],
+            answer : "React"
+        },
+        {
+            question : "What is the output of 'typeof null' in JavaScript?",
+            options : [
+                "object",
+                "null",
+                "undefined",
+                "boolean"
+            ],
+            answer : "object"
+        },
+        {
+            question : "Which method is used to add an element at the end of an array in JavaScript?",
+            options : [
+                "push()",
+                "pop()",
+                "shift()",
+                "unshift()"
+            ],
+            answer : "push()"
+        },
+        {
+            question : "What is the correct way to write a JavaScript array?",
+            options : [
+                "var colors = ['red', 'green', 'blue']",
+                "var colors = 'red', 'green', 'blue'",
+                "var colors = (1:'red', 2:'green', 3:'blue')",
+                "var colors = {'red', 'green', 'blue'}"
+            ],
+            answer : "var colors = ['red', 'green', 'blue']"
+        },
+        {
+            question : "Which of the following is NOT a JavaScript data type?",
+            options : [
+                "String",
+                "Number",
+                "Boolean",
+                "Character"
+            ],
+            answer : "Character"
+        },
+        {
+            question : "What is the output of 'console.log(2 + '2')' in JavaScript?",
+            options : [
+                "4",
+                "'22'",
+                "'4'",
+                "Error"
+            ],
+            answer : "'22'"
+        },
+        {
+            question : "Which of the following is used to declare a variable in JavaScript?",
+            options : [
+                "var",
+                "let",
+                "const",
+                "All of the above"
+            ],
+            answer : "All of the above"
+        }
+    ]
+    const form = document.getElementById('quiz-card');
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let started = false;
+    function showQuestions(){
+        document.getElementById('next').style.display = 'block';
+        const q = question[currentQuestionIndex];
+        questionElement.innerText = q.question;
+        optionsElement.innerHTML = '';
+        q.options.forEach(option =>{
+            const btn = document.createElement('button');
+            btn.innerText = option;
+            btn.addEventListener('click',()=>{checkAnswer(option,btn);
+                const allButtons = document.querySelectorAll("#options button");
+                allButtons.forEach(b => b.disabled = true);
+        });
+            optionsElement.appendChild(btn);
+        }
+   )}
+   function checkAnswer(option,btn){
+    const correct = question[currentQuestionIndex].answer;
+    if(option === correct){
+        score++;
+        btn.style.backgroundColor = 'green';
+    }else{
+        btn.style.backgroundColor = 'red';
+    }
+   }
+   document.getElementById("next").addEventListener('click',()=>{
+    if(started == false){
+        started = true;
+        document.getElementById('next').innerText = "Next Question";
+        showQuestions();
+        return;
+    }
+    currentQuestionIndex++;
+    if(currentQuestionIndex < question.length){
+        showQuestions();
+    }else{
+        document.getElementById('score').innerText = `Your score is ${score} out of ${question.length}`;
+        optionsElement.innerHTML = '';
+        questionElement.innerHTML = '';
+        document.getElementById('next').style.display = 'none';
+        const restartBtn = document.getElementById("restart");
+        restartBtn.style.display = "block";
+        restart.innerText = "Restart Quiz";
+        restartBtn.addEventListener("click", () => {
+              currentQuestionIndex = 0;
+              score = 0;
+              started = false;
+              restartBtn.style.display = "none";
+              document.getElementById("score").innerText = "";
+              showQuestions();
+});
+    }
+   })
+   </script>
+</html>
