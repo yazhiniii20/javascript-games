@@ -14,6 +14,7 @@
     color : white;
     padding : 10px;
     cursor : pointer;
+    margin-top : 10px;
 }
 .update-btn{
     background : lightgreen;
@@ -41,3 +42,19 @@
     text-decoration: line-through;
     color: gray;
   }
+.filter-container{
+    margin-top : 20px;
+    display : flex;
+    padding : 10px;
+    justify-content : space-between;
+    align-items : center;
+}
+.filter-btn{
+    background : rgb(15, 69, 103);
+    color : white;
+    padding : 10px;
+    cursor : pointer;
+}
+.filter-btn.active{
+    background : lightgreen;
+}
