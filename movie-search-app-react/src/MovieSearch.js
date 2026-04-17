@@ -1,11 +1,13 @@
 import {useState} from 'react';
 import './MovieSearch.css';
+import MovieCard from'./MovieCard.js';
+import MovieDetails from './MovieDetails.js'
 function MovieSearch(){
     const [search,setSearch] = useState("");
     const [movies , setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
-    const [selectedMovie , setselectedMovie] = useState([]);
+    const [selectedMovie , setselectedMovie] = useState(null);
     async function getMovies(search){
         setHasSearched(true);
         if(search.trim() === ""){
@@ -35,30 +37,24 @@ function MovieSearch(){
     }
     return(
       <div className = "movie-container">
-      <input type = "text" value = {search} onChange = {(e) => setSearch(e.target.value)}/>
+     {selectedMovie ? (
+           <MovieDetails selectedMovie={selectedMovie} onBack = {() => setselectedMovie(null)}/>
+        ):
+      (
+        <>
+        <input type = "text" value = {search} onChange = {(e) => setSearch(e.target.value)}/>
       <button onClick={() => getMovies(search)}> Search</button>
       {loading && <p> Loading </p>}
       {hasSearched && !loading && movies.length === 0 && (
              <p>No movies found</p>
      )}
-      <div className = "movie-grid">
+      <div className = "movie-grid" >
         {movies.map(movie => (
-            <div id = {movie.imdbID} className = "movie-card"  onClick = {() => getselectedmoviedetails(movie.imdbID)}>
-                <h3> {movie.Title}</h3>
-                <h4> {movie.Year} </h4>
-                <img src = {movie.Poster} alt = {movie.Title} onError={(e) => {
-    e.target.src = "https://placehold.net/400x400.png";
-  }}/>
-                   {selectedMovie && (
-            <div>
-                <h2> {selectedMovie.Title} </h2>
-                <p> {selectedMovie.Plot} </p>
-            </div>
-        )} 
-            </div>
-            
-        ))}
-        </div>
+            <MovieCard movie = {movie} onSelect = {getselectedmoviedetails}/> 
+        ))} 
+        </div> 
+        </>
+        )}
       
       </div>
     );
