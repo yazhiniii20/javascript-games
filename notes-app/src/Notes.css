@@ -48,3 +48,19 @@ body{
     color:white;
     background-color:red;
 }
+.edit-btn{
+    margin-top : 10px;
+    width:80px;
+    padding:10px;
+    border-radius:10px;
+    color:white;
+    background-color:blue;
+}
+.cancel-btn{
+    margin-top : 10px;
+    width:80px;
+    padding:10px;
+    border-radius:10px;
+    color:white;
+    background-color:rgb(77, 77, 86);
+}
