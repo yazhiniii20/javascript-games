@@ -66,3 +66,9 @@
         color:white;
         background-color:#0D3B66;
   }
+  .search-input{
+    margin-bottom : 10px;
+    padding:10px;
+    border-radius:30px;
+    width:40%;
+  }

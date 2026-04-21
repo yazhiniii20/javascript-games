@@ -1,6 +1,7 @@
 import {useState,useEffect} from 'react';
 import NoteForm from './NoteForm.js';
 import NoteList from './NoteList.js';
+import './Notes.css'
 function KnowledgeHub(){
  const [notes, setNotes] = useState(() => {
     const saved = localStorage.getItem("notes");
@@ -12,6 +13,7 @@ function KnowledgeHub(){
  const [input,setInput] = useState("");
  const [title,setTitle] = useState("");
  const [editId,setEditId] = useState(null);
+ const [search,setSearch] = useState("");
  function addNote(){
     if(input.trim() === ""){
         return;
@@ -59,12 +61,16 @@ function cancelNote(){
     setInput("");
     setEditId(null);
 }
+const filteredNotes = notes.filter(n =>
+  n.heading.toLowerCase().includes(search.toLowerCase()) || n.contents.toLowerCase().includes(search.toLowerCase())
+);
 return(
     <div>
     <h1> Personal Knowledge Hub </h1>
+    <input type="text" value = {search} className = "search-input" placeholder = "Search Notes..." onChange = {(e) => setSearch(e.target.value)}/>
     <NoteForm addNote = {addNote} input = {input} setInput = {setInput} title = {title} setTitle = {setTitle}
     editId = {editId} updateNote = {updateNote} cancelNote = {cancelNote}/>
-    <NoteList notes = {notes} deleteNote = {deleteNote} startEdit = {startEdit}/>
+    <NoteList notes = {filteredNotes} deleteNote = {deleteNote} startEdit = {startEdit}/>
     </div>
 );
 }
