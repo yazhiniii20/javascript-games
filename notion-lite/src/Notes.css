@@ -72,3 +72,11 @@
     border-radius:30px;
     width:40%;
   }
+  .tag {
+    /* background: #eee; */
+    padding: 4px 8px;
+    margin: 2px;
+    color:#0D3B66;
+    border-radius: 5px;
+    cursor : pointer;
+  }

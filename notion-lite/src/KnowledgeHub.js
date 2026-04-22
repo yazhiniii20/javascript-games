@@ -14,6 +14,9 @@ function KnowledgeHub(){
  const [title,setTitle] = useState("");
  const [editId,setEditId] = useState(null);
  const [search,setSearch] = useState("");
+ const [tagInput,setTagInput] = useState("");
+ const [tags,setTags] = useState([]);
+ const[selectedTag,setSelectedTag] = useState("");
  function addNote(){
     if(input.trim() === ""){
         return;
@@ -22,7 +25,7 @@ function KnowledgeHub(){
         id : Date.now(),
         heading : title,
         contents : input,
-        tags : [],
+        tags : tags,
         pinned : false,
         createdAt : new Date().toLocaleString(),
         updatedAt : ""
@@ -30,6 +33,7 @@ function KnowledgeHub(){
     setNotes([...notes,newNote]);
     setTitle("");
     setInput("");
+    setTags([]);
 }
 function deleteNote(id){
     setNotes(notes.filter(n => n.id !== id));
@@ -61,16 +65,21 @@ function cancelNote(){
     setInput("");
     setEditId(null);
 }
-const filteredNotes = notes.filter(n =>
-  n.heading.toLowerCase().includes(search.toLowerCase()) || n.contents.toLowerCase().includes(search.toLowerCase())
-);
+const filteredNotes = notes.filter(n =>{
+  const matchesSearch = n.heading.toLowerCase().includes(search.toLowerCase()) ||
+                        n.contents.toLowerCase().includes(search.toLowerCase());
+ 
+  const matchesTag = selectedTag === "" || n.tags.some(tag => tag === selectedTag);
+  return matchesSearch && matchesTag;
+});
 return(
     <div>
     <h1> Personal Knowledge Hub </h1>
     <input type="text" value = {search} className = "search-input" placeholder = "Search Notes..." onChange = {(e) => setSearch(e.target.value)}/>
     <NoteForm addNote = {addNote} input = {input} setInput = {setInput} title = {title} setTitle = {setTitle}
-    editId = {editId} updateNote = {updateNote} cancelNote = {cancelNote}/>
-    <NoteList notes = {filteredNotes} deleteNote = {deleteNote} startEdit = {startEdit}/>
+    editId = {editId} updateNote = {updateNote} cancelNote = {cancelNote} tagInput={tagInput} setTagInput = {setTagInput} tags={tags} setTags={setTags}
+    selectedTag = {selectedTag} setSelectedTag={setSelectedTag}/>
+    <NoteList notes = {filteredNotes} deleteNote = {deleteNote} startEdit = {startEdit} setSelectedTag = {setSelectedTag}/>
     </div>
 );
 }
